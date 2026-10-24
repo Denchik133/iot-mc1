@@ -1,0 +1,9 @@
+address,name,description,encoding,unit
+0,vibration,vibration velocity,x10,mm/s
+1,bearing_temperature,bearing temperature,x10,C
+2,motor_current,motor current,x100,A
+3,parts_count_high,production counter high word,uint16,word
+4,parts_count_low,production counter low word,uint16,word
+5,machine_state,0=IDLE;1=RUN;2=FAULT,uint16,code
+6,signal_tower,0=GREEN;1=YELLOW;2=RED,uint16,code
+7,emergency_stop,0=inactive;1=active,uint16,flag
