@@ -1,0 +1,68 @@
+var Number previousPartsCount = 0
+var Number shiftPartsCount = 0
+var Number downtimeSeconds = 0
+var long lastUpdate = 0
+
+rule "Machine vibration monitoring"
+when
+    Item Machine_Vibration changed
+then
+    if (Machine_Vibration.state instanceof Number) {
+        val vibration = (Machine_Vibration.state as Number).doubleValue
+
+        if (vibration > 7.1) {
+            Machine_Alert.postUpdate("CRITICAL: vibration " + vibration + " mm/s")
+            logWarn("machine", "Critical vibration detected: {} mm/s", vibration)
+        } else if (vibration > 4.5) {
+            Machine_Alert.postUpdate("WARNING: vibration " + vibration + " mm/s")
+            logWarn("machine", "High vibration detected: {} mm/s", vibration)
+        } else {
+            Machine_Alert.postUpdate("NORMAL")
+        }
+    }
+end
+
+rule "Machine shift parts counter"
+when
+    Item Machine_PartsCount changed
+then
+    if (Machine_PartsCount.state instanceof Number) {
+        val currentParts = (Machine_PartsCount.state as Number).longValue
+
+        if (previousPartsCount == 0) {
+            previousPartsCount = currentParts
+        } else if (currentParts >= previousPartsCount) {
+            shiftPartsCount = shiftPartsCount + (currentParts - previousPartsCount)
+            previousPartsCount = currentParts
+        } else {
+            previousPartsCount = currentParts
+        }
+
+        Machine_ShiftParts.postUpdate(shiftPartsCount)
+    }
+end
+
+rule "Machine downtime counter"
+when
+    Item Machine_State changed or
+    System started
+then
+    if (Machine_DowntimeSeconds.state == NULL) {
+        Machine_DowntimeSeconds.postUpdate(0)
+    }
+end
+
+rule "Machine downtime timer"
+when
+    Time cron "0/1 * * * * ?"
+then
+    if (Machine_State.state != NULL &&
+        Machine_State.state.toString != "RUN") {
+        if (Machine_DowntimeSeconds.state instanceof Number) {
+            val currentDowntime = (Machine_DowntimeSeconds.state as Number).intValue
+            Machine_DowntimeSeconds.postUpdate(currentDowntime + 1)
+        } else {
+            Machine_DowntimeSeconds.postUpdate(1)
+        }
+    }
+end

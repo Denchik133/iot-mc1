@@ -1,0 +1,33 @@
+Thing mqtt:topic:iiot:machine01 "Machine 01" (mqtt:broker:iiot) {
+    Channels:
+        Type number : vibration "Vibration" [
+            stateTopic="iiot/workshop/machine01/vibration/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type number : bearing_temperature "Bearing Temperature" [
+            stateTopic="iiot/workshop/machine01/bearing_temperature/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type number : motor_current "Motor Current" [
+            stateTopic="iiot/workshop/machine01/motor_current/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type number : parts_count "Parts Count" [
+            stateTopic="iiot/workshop/machine01/parts_count/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type string : machine_state "Machine State" [
+            stateTopic="iiot/workshop/machine01/machine_state/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type string : signal_tower "Signal Tower" [
+            stateTopic="iiot/workshop/machine01/signal_tower/telemetry",
+            transformationPattern="JSONPATH:$.value"
+        ]
+        Type switch : emergency_stop "Emergency Stop" [
+            stateTopic="iiot/workshop/machine01/emergency_stop/telemetry",
+            transformationPattern="JSONPATH:$.value",
+            on="true",
+            off="false"
+        ]
+}

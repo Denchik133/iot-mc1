@@ -1,0 +1,11 @@
+Number Machine_Vibration "Вібрація [%.1f мм/с]" { channel="mqtt:topic:iiot:machine01:vibration" }
+Number Machine_BearingTemperature "Температура підшипника [%.1f °C]" { channel="mqtt:topic:iiot:machine01:bearing_temperature" }
+Number Machine_MotorCurrent "Струм двигуна [%.2f A]" { channel="mqtt:topic:iiot:machine01:motor_current" }
+Number Machine_PartsCount "Кількість деталей [%d]" { channel="mqtt:topic:iiot:machine01:parts_count" }
+String Machine_State "Стан машини [%s]" { channel="mqtt:topic:iiot:machine01:machine_state" }
+String Machine_SignalTower "Світлова сигналізація [%s]" { channel="mqtt:topic:iiot:machine01:signal_tower" }
+Switch Machine_EmergencyStop "Аварійна зупинка [%s]" { channel="mqtt:topic:iiot:machine01:emergency_stop" }
+
+String Machine_Alert "Стан тривоги [%s]"
+Number Machine_ShiftParts "Вироблено за зміну [%d]"
+Number Machine_DowntimeSeconds "Простій за зміну [%.0f с]"
