@@ -1,0 +1,19 @@
+user admin
+topic readwrite #
+
+user machine_simulator
+topic write iiot/workshop/machine01/status
+
+user iiot_gateway
+topic write iiot/workshop/machine01/#
+topic read iiot/workshop/machine01/+/set
+
+user openhab
+topic read iiot/workshop/machine01/#
+topic write iiot/workshop/machine01/+/set
+
+user signal_tower
+topic read iiot/workshop/machine01/signal_tower/set
+
+user emergency_stop
+topic read iiot/workshop/machine01/emergency_stop/set

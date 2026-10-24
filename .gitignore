@@ -1,0 +1,42 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# MQTT credentials
+mosquitto/config/passwd
+mosquitto/data/
+mosquitto/log/
+
+# Private TLS keys and certificate requests
+certs/*.key
+certs/*.csr
+certs/*.srl
+certs/server.ext
+
+# Generated local state
+.DS_Store
+
+# Local backups and temporary files
+*.bak
+*.backup
+/0
+
+# openHAB local backup
+openhab/conf/rules/machine.rules.backup
+
+# Mosquitto runtime database
+mosquitto/data/
+
+# Backup and temporary files
+*.bak
+*.backup
+*.db
+
+# Local openHAB configuration with credentials
+openhab/conf/things/mqtt.things
