@@ -1,0 +1,93 @@
+Thing mqtt:topic:greenhouse:stress "Greenhouse Stress Test" (mqtt:broker:greenhouse) {
+    Channels:
+        Type string : device_01 "Stress Device 01" [
+            stateTopic="greenhouse/stress/virtual_device_01/sensors"
+        ]
+        Type string : device_02 "Stress Device 02" [
+            stateTopic="greenhouse/stress/virtual_device_02/sensors"
+        ]
+        Type string : device_03 "Stress Device 03" [
+            stateTopic="greenhouse/stress/virtual_device_03/sensors"
+        ]
+        Type string : device_04 "Stress Device 04" [
+            stateTopic="greenhouse/stress/virtual_device_04/sensors"
+        ]
+        Type string : device_05 "Stress Device 05" [
+            stateTopic="greenhouse/stress/virtual_device_05/sensors"
+        ]
+        Type string : device_06 "Stress Device 06" [
+            stateTopic="greenhouse/stress/virtual_device_06/sensors"
+        ]
+        Type string : device_07 "Stress Device 07" [
+            stateTopic="greenhouse/stress/virtual_device_07/sensors"
+        ]
+        Type string : device_08 "Stress Device 08" [
+            stateTopic="greenhouse/stress/virtual_device_08/sensors"
+        ]
+        Type string : device_09 "Stress Device 09" [
+            stateTopic="greenhouse/stress/virtual_device_09/sensors"
+        ]
+        Type string : device_10 "Stress Device 10" [
+            stateTopic="greenhouse/stress/virtual_device_10/sensors"
+        ]
+        Type string : device_11 "Stress Device 11" [
+            stateTopic="greenhouse/stress/virtual_device_11/sensors"
+        ]
+        Type string : device_12 "Stress Device 12" [
+            stateTopic="greenhouse/stress/virtual_device_12/sensors"
+        ]
+        Type string : device_13 "Stress Device 13" [
+            stateTopic="greenhouse/stress/virtual_device_13/sensors"
+        ]
+        Type string : device_14 "Stress Device 14" [
+            stateTopic="greenhouse/stress/virtual_device_14/sensors"
+        ]
+        Type string : device_15 "Stress Device 15" [
+            stateTopic="greenhouse/stress/virtual_device_15/sensors"
+        ]
+        Type string : device_16 "Stress Device 16" [
+            stateTopic="greenhouse/stress/virtual_device_16/sensors"
+        ]
+        Type string : device_17 "Stress Device 17" [
+            stateTopic="greenhouse/stress/virtual_device_17/sensors"
+        ]
+        Type string : device_18 "Stress Device 18" [
+            stateTopic="greenhouse/stress/virtual_device_18/sensors"
+        ]
+        Type string : device_19 "Stress Device 19" [
+            stateTopic="greenhouse/stress/virtual_device_19/sensors"
+        ]
+        Type string : device_20 "Stress Device 20" [
+            stateTopic="greenhouse/stress/virtual_device_20/sensors"
+        ]
+        Type string : device_21 "Stress Device 21" [
+            stateTopic="greenhouse/stress/virtual_device_21/sensors"
+        ]
+        Type string : device_22 "Stress Device 22" [
+            stateTopic="greenhouse/stress/virtual_device_22/sensors"
+        ]
+        Type string : device_23 "Stress Device 23" [
+            stateTopic="greenhouse/stress/virtual_device_23/sensors"
+        ]
+        Type string : device_24 "Stress Device 24" [
+            stateTopic="greenhouse/stress/virtual_device_24/sensors"
+        ]
+        Type string : device_25 "Stress Device 25" [
+            stateTopic="greenhouse/stress/virtual_device_25/sensors"
+        ]
+        Type string : device_26 "Stress Device 26" [
+            stateTopic="greenhouse/stress/virtual_device_26/sensors"
+        ]
+        Type string : device_27 "Stress Device 27" [
+            stateTopic="greenhouse/stress/virtual_device_27/sensors"
+        ]
+        Type string : device_28 "Stress Device 28" [
+            stateTopic="greenhouse/stress/virtual_device_28/sensors"
+        ]
+        Type string : device_29 "Stress Device 29" [
+            stateTopic="greenhouse/stress/virtual_device_29/sensors"
+        ]
+        Type string : device_30 "Stress Device 30" [
+            stateTopic="greenhouse/stress/virtual_device_30/sensors"
+        ]
+}

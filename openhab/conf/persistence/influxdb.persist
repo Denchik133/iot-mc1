@@ -1,0 +1,37 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+    default = everyChange
+}
+
+Items {
+    Greenhouse_AirTemperature,
+    Greenhouse_AirHumidity,
+    Greenhouse_SoilTemperature,
+    Greenhouse_SoilHumidity,
+    Greenhouse_Illumination,
+    Greenhouse_CO2,
+    Greenhouse_Status,
+    Health_AirTemp_Status,
+    Health_AirTemp_LastSeen,
+    Health_AirHumidity_Status,
+    Health_AirHumidity_LastSeen,
+    Health_SoilTemp_Status,
+    Health_SoilTemp_LastSeen,
+    Health_SoilHumidity_Status,
+    Health_SoilHumidity_LastSeen,
+    Health_Lux_Status,
+    Health_Lux_LastSeen,
+    Health_CO2_Status,
+    Health_CO2_LastSeen,
+    Health_Pump_Status,
+    Health_Pump_LastSeen,
+    Health_Fan_Status,
+    Health_Fan_LastSeen,
+    Health_Light_Status,
+    Health_Light_LastSeen,
+    Health_Heater_Status,
+    Health_Heater_LastSeen,
+    Health_Window_Status,
+    Health_Window_LastSeen
+    : strategy = everyChange, everyMinute
+}

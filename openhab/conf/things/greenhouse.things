@@ -68,4 +68,129 @@ Thing mqtt:topic:greenhouse:environment "Greenhouse Environment" (mqtt:broker:gr
         Type number : window "Window Opening" [
             commandTopic="greenhouse/actuators/window"
         ]
+
+                // ==========================================
+        // DEVICE HEALTH MONITORING
+        // ==========================================
+
+        // Air Temperature
+        Type string : air_temp_status "Air Temperature Status" [
+            stateTopic="greenhouse/health/air_temp/status"
+        ]
+        Type string : air_temp_heartbeat "Air Temperature Heartbeat" [
+            stateTopic="greenhouse/health/air_temp/heartbeat"
+        ]
+        Type string : air_temp_last_seen "Air Temperature Last Seen" [
+            stateTopic="greenhouse/health/air_temp/last_seen"
+        ]
+
+        // Air Humidity
+        Type string : air_humidity_status "Air Humidity Status" [
+            stateTopic="greenhouse/health/air_humidity/status"
+        ]
+        Type string : air_humidity_heartbeat "Air Humidity Heartbeat" [
+            stateTopic="greenhouse/health/air_humidity/heartbeat"
+        ]
+        Type string : air_humidity_last_seen "Air Humidity Last Seen" [
+            stateTopic="greenhouse/health/air_humidity/last_seen"
+        ]
+
+        // Soil Temperature
+        Type string : soil_temp_status "Soil Temperature Status" [
+            stateTopic="greenhouse/health/soil_temp/status"
+        ]
+        Type string : soil_temp_heartbeat "Soil Temperature Heartbeat" [
+            stateTopic="greenhouse/health/soil_temp/heartbeat"
+        ]
+        Type string : soil_temp_last_seen "Soil Temperature Last Seen" [
+            stateTopic="greenhouse/health/soil_temp/last_seen"
+        ]
+
+        // Soil Humidity
+        Type string : soil_humidity_status "Soil Humidity Status" [
+            stateTopic="greenhouse/health/soil_humidity/status"
+        ]
+        Type string : soil_humidity_heartbeat "Soil Humidity Heartbeat" [
+            stateTopic="greenhouse/health/soil_humidity/heartbeat"
+        ]
+        Type string : soil_humidity_last_seen "Soil Humidity Last Seen" [
+            stateTopic="greenhouse/health/soil_humidity/last_seen"
+        ]
+
+        // Illumination
+        Type string : lux_status "Illumination Status" [
+            stateTopic="greenhouse/health/lux/status"
+        ]
+        Type string : lux_heartbeat "Illumination Heartbeat" [
+            stateTopic="greenhouse/health/lux/heartbeat"
+        ]
+        Type string : lux_last_seen "Illumination Last Seen" [
+            stateTopic="greenhouse/health/lux/last_seen"
+        ]
+
+        // CO2
+        Type string : co2_status "CO2 Status" [
+            stateTopic="greenhouse/health/co2/status"
+        ]
+        Type string : co2_heartbeat "CO2 Heartbeat" [
+            stateTopic="greenhouse/health/co2/heartbeat"
+        ]
+        Type string : co2_last_seen "CO2 Last Seen" [
+            stateTopic="greenhouse/health/co2/last_seen"
+        ]
+
+        // Pump
+        Type string : pump_status "Pump Status" [
+            stateTopic="greenhouse/health/pump/status"
+        ]
+        Type string : pump_heartbeat "Pump Heartbeat" [
+            stateTopic="greenhouse/health/pump/heartbeat"
+        ]
+        Type string : pump_last_seen "Pump Last Seen" [
+            stateTopic="greenhouse/health/pump/last_seen"
+        ]
+
+        // Fan
+        Type string : fan_status "Fan Status" [
+            stateTopic="greenhouse/health/fan/status"
+        ]
+        Type string : fan_heartbeat "Fan Heartbeat" [
+            stateTopic="greenhouse/health/fan/heartbeat"
+        ]
+        Type string : fan_last_seen "Fan Last Seen" [
+            stateTopic="greenhouse/health/fan/last_seen"
+        ]
+
+        // Grow Light
+        Type string : light_status "Light Status" [
+            stateTopic="greenhouse/health/light/status"
+        ]
+        Type string : light_heartbeat "Light Heartbeat" [
+            stateTopic="greenhouse/health/light/heartbeat"
+        ]
+        Type string : light_last_seen "Light Last Seen" [
+            stateTopic="greenhouse/health/light/last_seen"
+        ]
+
+        // Heater
+        Type string : heater_status "Heater Status" [
+            stateTopic="greenhouse/health/heater/status"
+        ]
+        Type string : heater_heartbeat "Heater Heartbeat" [
+            stateTopic="greenhouse/health/heater/heartbeat"
+        ]
+        Type string : heater_last_seen "Heater Last Seen" [
+            stateTopic="greenhouse/health/heater/last_seen"
+        ]
+
+        // Window
+        Type string : window_status "Window Status" [
+            stateTopic="greenhouse/health/window/status"
+        ]
+        Type string : window_heartbeat "Window Heartbeat" [
+            stateTopic="greenhouse/health/window/heartbeat"
+        ]
+        Type string : window_last_seen "Window Last Seen" [
+            stateTopic="greenhouse/health/window/last_seen"
+        ]
 }

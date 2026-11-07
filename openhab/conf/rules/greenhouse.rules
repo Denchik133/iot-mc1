@@ -1,7 +1,12 @@
+import java.util.HashMap
+import java.time.Instant
+
 // ==========================================
 // SMART GREENHOUSE - AUTOMATION RULES
 // ==========================================
 
+var deviceTimers = new HashMap<String, org.openhab.core.model.script.actions.Timer>()
+var sensorDataTimers = new HashMap<String, org.openhab.core.model.script.actions.Timer>()
 
 // ==========================================
 // 1. AUTOMATIC IRRIGATION
@@ -21,7 +26,6 @@ then
     }
 end
 
-
 rule "Greenhouse - Automatic Irrigation OFF"
 when
     Item Greenhouse_SoilHumidity changed
@@ -35,7 +39,6 @@ then
         }
     }
 end
-
 
 // ==========================================
 // 2. AUTOMATIC VENTILATION
@@ -55,7 +58,6 @@ then
     }
 end
 
-
 rule "Greenhouse - Automatic Ventilation OFF"
 when
     Item Greenhouse_AirTemperature changed
@@ -69,7 +71,6 @@ then
         }
     }
 end
-
 
 // ==========================================
 // 3. AUTOMATIC LIGHTING
@@ -89,7 +90,6 @@ then
     }
 end
 
-
 rule "Greenhouse - Automatic Lighting OFF"
 when
     Item Greenhouse_Illumination changed
@@ -102,4 +102,374 @@ then
             logInfo("Greenhouse", "Illumination above 7000 lx. Lighting OFF.")
         }
     }
+end
+
+// ==========================================
+// 4. DEVICE HEALTH MONITORING
+// ==========================================
+
+rule "Greenhouse - Device Heartbeat Received"
+when
+    Member of gGreenhouseHealth received update
+then
+    val deviceName = triggeringItem.name.replace("Health_", "").replace("_Heartbeat", "")
+    val timestamp = Instant.now().toString()
+
+    var previousStatus = "UNKNOWN"
+
+    switch deviceName {
+        case "AirTemp": previousStatus = Health_AirTemp_Status.state.toString
+        case "AirHumidity": previousStatus = Health_AirHumidity_Status.state.toString
+        case "SoilTemp": previousStatus = Health_SoilTemp_Status.state.toString
+        case "SoilHumidity": previousStatus = Health_SoilHumidity_Status.state.toString
+        case "Lux": previousStatus = Health_Lux_Status.state.toString
+        case "CO2": previousStatus = Health_CO2_Status.state.toString
+        case "Pump": previousStatus = Health_Pump_Status.state.toString
+        case "Fan": previousStatus = Health_Fan_Status.state.toString
+        case "Light": previousStatus = Health_Light_Status.state.toString
+        case "Heater": previousStatus = Health_Heater_Status.state.toString
+        case "Window": previousStatus = Health_Window_Status.state.toString
+    }
+
+    switch deviceName {
+        case "AirTemp": {
+            Health_AirTemp_Status.postUpdate("ONLINE")
+            Health_AirTemp_LastSeen.postUpdate(timestamp)
+        }
+        case "AirHumidity": {
+            Health_AirHumidity_Status.postUpdate("ONLINE")
+            Health_AirHumidity_LastSeen.postUpdate(timestamp)
+        }
+        case "SoilTemp": {
+            Health_SoilTemp_Status.postUpdate("ONLINE")
+            Health_SoilTemp_LastSeen.postUpdate(timestamp)
+        }
+        case "SoilHumidity": {
+            Health_SoilHumidity_Status.postUpdate("ONLINE")
+            Health_SoilHumidity_LastSeen.postUpdate(timestamp)
+        }
+        case "Lux": {
+            Health_Lux_Status.postUpdate("ONLINE")
+            Health_Lux_LastSeen.postUpdate(timestamp)
+        }
+        case "CO2": {
+            Health_CO2_Status.postUpdate("ONLINE")
+            Health_CO2_LastSeen.postUpdate(timestamp)
+        }
+        case "Pump": {
+            Health_Pump_Status.postUpdate("ONLINE")
+            Health_Pump_LastSeen.postUpdate(timestamp)
+        }
+        case "Fan": {
+            Health_Fan_Status.postUpdate("ONLINE")
+            Health_Fan_LastSeen.postUpdate(timestamp)
+        }
+        case "Light": {
+            Health_Light_Status.postUpdate("ONLINE")
+            Health_Light_LastSeen.postUpdate(timestamp)
+        }
+        case "Heater": {
+            Health_Heater_Status.postUpdate("ONLINE")
+            Health_Heater_LastSeen.postUpdate(timestamp)
+        }
+        case "Window": {
+            Health_Window_Status.postUpdate("ONLINE")
+            Health_Window_LastSeen.postUpdate(timestamp)
+        }
+    }
+
+    if (previousStatus == "OFFLINE") {
+        val telegramAction = getActions("telegram", "telegram:telegramBot:9e2967e2df")
+        telegramAction.sendTelegram("Greenhouse: " + deviceName + " has recovered and is ONLINE.")
+    }
+
+    if (deviceTimers.get(deviceName) !== null) {
+        deviceTimers.get(deviceName).cancel()
+    }
+
+    val timer = createTimer(now.plusSeconds(15), [ |
+        switch deviceName {
+            case "AirTemp": Health_AirTemp_Status.postUpdate("OFFLINE")
+            case "AirHumidity": Health_AirHumidity_Status.postUpdate("OFFLINE")
+            case "SoilTemp": Health_SoilTemp_Status.postUpdate("OFFLINE")
+            case "SoilHumidity": Health_SoilHumidity_Status.postUpdate("OFFLINE")
+            case "Lux": Health_Lux_Status.postUpdate("OFFLINE")
+            case "CO2": Health_CO2_Status.postUpdate("OFFLINE")
+            case "Pump": Health_Pump_Status.postUpdate("OFFLINE")
+            case "Fan": Health_Fan_Status.postUpdate("OFFLINE")
+            case "Light": Health_Light_Status.postUpdate("OFFLINE")
+            case "Heater": Health_Heater_Status.postUpdate("OFFLINE")
+            case "Window": Health_Window_Status.postUpdate("OFFLINE")
+        }
+
+        logWarn("Greenhouse Health", deviceName + " is OFFLINE. Heartbeat timeout.")
+
+        val telegramAction = getActions("telegram", "telegram:telegramBot:9e2967e2df")
+        telegramAction.sendTelegram("Greenhouse ALERT: " + deviceName + " is OFFLINE. Heartbeat timeout.")
+
+        deviceTimers.remove(deviceName)
+    ])
+
+    deviceTimers.put(deviceName, timer)
+
+    logInfo("Greenhouse Health", deviceName + " is ONLINE. Last Seen: " + timestamp)
+end
+
+// ==========================================
+// 5. ANOMALY DETECTION - INVALID VALUES
+// ==========================================
+
+rule "Greenhouse - Check Air Temperature Range"
+when
+    Item Greenhouse_AirTemperature changed
+then
+    if (Greenhouse_AirTemperature.state instanceof Number) {
+        val value = (Greenhouse_AirTemperature.state as Number).doubleValue
+        if (value < 10 || value > 45) {
+            logWarn("Greenhouse Anomaly", "Invalid air temperature: " + value + " C")
+        }
+    }
+end
+
+rule "Greenhouse - Check Air Humidity Range"
+when
+    Item Greenhouse_AirHumidity changed
+then
+    if (Greenhouse_AirHumidity.state instanceof Number) {
+        val value = (Greenhouse_AirHumidity.state as Number).doubleValue
+        if (value < 20 || value > 90) {
+            logWarn("Greenhouse Anomaly", "Invalid air humidity: " + value + " %")
+        }
+    }
+end
+
+rule "Greenhouse - Check Soil Temperature Range"
+when
+    Item Greenhouse_SoilTemperature changed
+then
+    if (Greenhouse_SoilTemperature.state instanceof Number) {
+        val value = (Greenhouse_SoilTemperature.state as Number).doubleValue
+        if (value < 10 || value > 35) {
+            logWarn("Greenhouse Anomaly", "Invalid soil temperature: " + value + " C")
+        }
+    }
+end
+
+rule "Greenhouse - Check Soil Humidity Range"
+when
+    Item Greenhouse_SoilHumidity changed
+then
+    if (Greenhouse_SoilHumidity.state instanceof Number) {
+        val value = (Greenhouse_SoilHumidity.state as Number).doubleValue
+        if (value < 0 || value > 100) {
+            logWarn("Greenhouse Anomaly", "Invalid soil humidity: " + value + " %")
+        }
+    }
+end
+
+rule "Greenhouse - Check Illumination Range"
+when
+    Item Greenhouse_Illumination changed
+then
+    if (Greenhouse_Illumination.state instanceof Number) {
+        val value = (Greenhouse_Illumination.state as Number).doubleValue
+        if (value < 0 || value > 20000) {
+            logWarn("Greenhouse Anomaly", "Invalid illumination: " + value + " lx")
+        }
+    }
+end
+
+rule "Greenhouse - Check CO2 Range"
+when
+    Item Greenhouse_CO2 changed
+then
+    if (Greenhouse_CO2.state instanceof Number) {
+        val value = (Greenhouse_CO2.state as Number).doubleValue
+        if (value < 300 || value > 1500) {
+            logWarn("Greenhouse Anomaly", "Invalid CO2 level: " + value + " ppm")
+        }
+    }
+end
+
+// ==========================================
+// 6. ANOMALY DETECTION - SUDDEN CHANGES
+// ==========================================
+
+rule "Greenhouse - Air Temperature Sudden Change"
+when
+    Item Greenhouse_AirTemperature changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 10) {
+            logWarn("Greenhouse Anomaly", "Sudden air temperature change: " + oldValue + " -> " + newValue + " C")
+        }
+    }
+end
+
+rule "Greenhouse - Air Humidity Sudden Change"
+when
+    Item Greenhouse_AirHumidity changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 20) {
+            logWarn("Greenhouse Anomaly", "Sudden air humidity change: " + oldValue + " -> " + newValue + " %")
+        }
+    }
+end
+
+rule "Greenhouse - Soil Temperature Sudden Change"
+when
+    Item Greenhouse_SoilTemperature changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 5) {
+            logWarn("Greenhouse Anomaly", "Sudden soil temperature change: " + oldValue + " -> " + newValue + " C")
+        }
+    }
+end
+
+rule "Greenhouse - Soil Humidity Sudden Change"
+when
+    Item Greenhouse_SoilHumidity changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 25) {
+            logWarn("Greenhouse Anomaly", "Sudden soil humidity change: " + oldValue + " -> " + newValue + " %")
+        }
+    }
+end
+
+rule "Greenhouse - Illumination Sudden Change"
+when
+    Item Greenhouse_Illumination changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 5000) {
+            logWarn("Greenhouse Anomaly", "Sudden illumination change: " + oldValue + " -> " + newValue + " lx")
+        }
+    }
+end
+
+rule "Greenhouse - CO2 Sudden Change"
+when
+    Item Greenhouse_CO2 changed
+then
+    if (previousState instanceof Number && newState instanceof Number) {
+        val oldValue = (previousState as Number).doubleValue
+        val newValue = (newState as Number).doubleValue
+
+        if (Math::abs(newValue - oldValue) > 300) {
+            logWarn("Greenhouse Anomaly", "Sudden CO2 change: " + oldValue + " -> " + newValue + " ppm")
+        }
+    }
+end
+
+// ==========================================
+// 7. ANOMALY DETECTION - MISSING SENSOR DATA
+// ==========================================
+
+
+rule "Greenhouse - Air Temperature Data Timeout"
+when
+    Item Greenhouse_AirTemperature received update
+then
+    val key = "air_temperature"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No air temperature data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
+end
+
+rule "Greenhouse - Air Humidity Data Timeout"
+when
+    Item Greenhouse_AirHumidity received update
+then
+    val key = "air_humidity"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No air humidity data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
+end
+
+rule "Greenhouse - Soil Temperature Data Timeout"
+when
+    Item Greenhouse_SoilTemperature received update
+then
+    val key = "soil_temperature"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No soil temperature data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
+end
+
+rule "Greenhouse - Soil Humidity Data Timeout"
+when
+    Item Greenhouse_SoilHumidity received update
+then
+    val key = "soil_humidity"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No soil humidity data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
+end
+
+rule "Greenhouse - Illumination Data Timeout"
+when
+    Item Greenhouse_Illumination received update
+then
+    val key = "illumination"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No illumination data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
+end
+
+rule "Greenhouse - CO2 Data Timeout"
+when
+    Item Greenhouse_CO2 received update
+then
+    val key = "co2"
+    if (sensorDataTimers.containsKey(key)) {
+        sensorDataTimers.get(key).cancel()
+    }
+    val timer = createTimer(now.plusSeconds(15), [ |
+        logWarn("Greenhouse Anomaly", "No CO2 data received for 15 seconds.")
+        sensorDataTimers.remove(key)
+    ])
+    sensorDataTimers.put(key, timer)
 end

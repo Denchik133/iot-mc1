@@ -54,3 +54,130 @@ Switch Greenhouse_Heater "Обігрів" {
 Number Greenhouse_Window "Відкриття вікна [%.0f %%]" {
     channel="mqtt:topic:greenhouse:environment:window"
 }
+
+// ==========================================
+// DEVICE HEALTH MONITORING
+// ==========================================
+
+Group gGreenhouseHealth "Моніторинг стану пристроїв"
+
+// Air Temperature
+String Health_AirTemp_Status "Температура повітря — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:air_temp_status"
+}
+String Health_AirTemp_Heartbeat "Температура повітря — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:air_temp_heartbeat"
+}
+String Health_AirTemp_LastSeen "Температура повітря — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:air_temp_last_seen"
+}
+
+// Air Humidity
+String Health_AirHumidity_Status "Вологість повітря — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:air_humidity_status"
+}
+String Health_AirHumidity_Heartbeat "Вологість повітря — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:air_humidity_heartbeat"
+}
+String Health_AirHumidity_LastSeen "Вологість повітря — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:air_humidity_last_seen"
+}
+
+// Soil Temperature
+String Health_SoilTemp_Status "Температура ґрунту — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:soil_temp_status"
+}
+String Health_SoilTemp_Heartbeat "Температура ґрунту — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:soil_temp_heartbeat"
+}
+String Health_SoilTemp_LastSeen "Температура ґрунту — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:soil_temp_last_seen"
+}
+
+// Soil Humidity
+String Health_SoilHumidity_Status "Вологість ґрунту — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:soil_humidity_status"
+}
+String Health_SoilHumidity_Heartbeat "Вологість ґрунту — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:soil_humidity_heartbeat"
+}
+String Health_SoilHumidity_LastSeen "Вологість ґрунту — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:soil_humidity_last_seen"
+}
+
+// Illumination
+String Health_Lux_Status "Освітленість — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:lux_status"
+}
+String Health_Lux_Heartbeat "Освітленість — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:lux_heartbeat"
+}
+String Health_Lux_LastSeen "Освітленість — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:lux_last_seen"
+}
+
+// CO2
+String Health_CO2_Status "CO2 — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:co2_status"
+}
+String Health_CO2_Heartbeat "CO2 — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:co2_heartbeat"
+}
+String Health_CO2_LastSeen "CO2 — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:co2_last_seen"
+}
+
+// Pump
+String Health_Pump_Status "Насос — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:pump_status"
+}
+String Health_Pump_Heartbeat "Насос — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:pump_heartbeat"
+}
+String Health_Pump_LastSeen "Насос — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:pump_last_seen"
+}
+
+// Fan
+String Health_Fan_Status "Вентилятор — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:fan_status"
+}
+String Health_Fan_Heartbeat "Вентилятор — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:fan_heartbeat"
+}
+String Health_Fan_LastSeen "Вентилятор — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:fan_last_seen"
+}
+
+// Grow Light
+String Health_Light_Status "Освітлення — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:light_status"
+}
+String Health_Light_Heartbeat "Освітлення — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:light_heartbeat"
+}
+String Health_Light_LastSeen "Освітлення — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:light_last_seen"
+}
+
+// Heater
+String Health_Heater_Status "Обігрівач — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:heater_status"
+}
+String Health_Heater_Heartbeat "Обігрівач — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:heater_heartbeat"
+}
+String Health_Heater_LastSeen "Обігрівач — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:heater_last_seen"
+}
+
+// Window
+String Health_Window_Status "Вікно — статус [%s]" {
+    channel="mqtt:topic:greenhouse:environment:window_status"
+}
+String Health_Window_Heartbeat "Вікно — Heartbeat [%s]" (gGreenhouseHealth) {
+    channel="mqtt:topic:greenhouse:environment:window_heartbeat"
+}
+String Health_Window_LastSeen "Вікно — Last Seen [%s]" {
+    channel="mqtt:topic:greenhouse:environment:window_last_seen"
+}

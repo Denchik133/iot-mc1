@@ -1,0 +1,32 @@
+Group gStressTest "Stress Test Devices"
+String Stress_Device_01 "Virtual Device 01 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_01" }
+String Stress_Device_02 "Virtual Device 02 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_02" }
+String Stress_Device_03 "Virtual Device 03 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_03" }
+String Stress_Device_04 "Virtual Device 04 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_04" }
+String Stress_Device_05 "Virtual Device 05 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_05" }
+String Stress_Device_06 "Virtual Device 06 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_06" }
+String Stress_Device_07 "Virtual Device 07 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_07" }
+String Stress_Device_08 "Virtual Device 08 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_08" }
+String Stress_Device_09 "Virtual Device 09 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_09" }
+String Stress_Device_10 "Virtual Device 10 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_10" }
+String Stress_Device_11 "Virtual Device 11 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_11" }
+String Stress_Device_12 "Virtual Device 12 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_12" }
+String Stress_Device_13 "Virtual Device 13 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_13" }
+String Stress_Device_14 "Virtual Device 14 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_14" }
+String Stress_Device_15 "Virtual Device 15 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_15" }
+String Stress_Device_16 "Virtual Device 16 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_16" }
+String Stress_Device_17 "Virtual Device 17 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_17" }
+String Stress_Device_18 "Virtual Device 18 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_18" }
+String Stress_Device_19 "Virtual Device 19 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_19" }
+String Stress_Device_20 "Virtual Device 20 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_20" }
+String Stress_Device_21 "Virtual Device 21 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_21" }
+String Stress_Device_22 "Virtual Device 22 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_22" }
+String Stress_Device_23 "Virtual Device 23 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_23" }
+String Stress_Device_24 "Virtual Device 24 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_24" }
+String Stress_Device_25 "Virtual Device 25 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_25" }
+String Stress_Device_26 "Virtual Device 26 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_26" }
+String Stress_Device_27 "Virtual Device 27 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_27" }
+String Stress_Device_28 "Virtual Device 28 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_28" }
+String Stress_Device_29 "Virtual Device 29 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_29" }
+String Stress_Device_30 "Virtual Device 30 [%s]" (gStressTest) { channel="mqtt:topic:greenhouse:stress:device_30" }
+
