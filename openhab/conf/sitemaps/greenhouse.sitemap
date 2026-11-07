@@ -1,0 +1,36 @@
+sitemap greenhouse label="Smart Greenhouse" {
+
+    Frame label="Стан системи" {
+        Text item=Greenhouse_Status
+    }
+
+    Frame label="Моніторинг мікроклімату" {
+        Text item=Greenhouse_AirTemperature
+        Text item=Greenhouse_AirHumidity
+        Text item=Greenhouse_SoilTemperature
+        Text item=Greenhouse_SoilHumidity
+        Text item=Greenhouse_Illumination
+        Text item=Greenhouse_CO2
+    }
+
+    Frame label="Історія показників" {
+        Chart item=Greenhouse_AirTemperature label="Температура повітря" period=D refresh=60000 service="rrd4j"
+        Chart item=Greenhouse_AirHumidity label="Вологість повітря" period=D refresh=60000 service="rrd4j"
+        Chart item=Greenhouse_SoilTemperature label="Температура ґрунту" period=D refresh=60000 service="rrd4j"
+        Chart item=Greenhouse_SoilHumidity label="Вологість ґрунту" period=D refresh=60000 service="rrd4j"
+        Chart item=Greenhouse_Illumination label="Освітленість" period=D refresh=60000 service="rrd4j"
+        Chart item=Greenhouse_CO2 label="CO2" period=D refresh=60000 service="rrd4j"
+    }
+
+    Frame label="Керування обладнанням" {
+        Switch item=Greenhouse_Pump
+        Switch item=Greenhouse_Fan
+        Switch item=Greenhouse_Light
+        Switch item=Greenhouse_Heater
+
+        Setpoint item=Greenhouse_Window
+            minValue=0
+            maxValue=100
+            step=10
+    }
+}

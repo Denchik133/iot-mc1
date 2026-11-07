@@ -1,0 +1,14 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+    default = everyChange
+}
+
+Items {
+    Greenhouse_AirTemperature,
+    Greenhouse_AirHumidity,
+    Greenhouse_SoilTemperature,
+    Greenhouse_SoilHumidity,
+    Greenhouse_Illumination,
+    Greenhouse_CO2
+    : strategy = everyChange, everyMinute
+}

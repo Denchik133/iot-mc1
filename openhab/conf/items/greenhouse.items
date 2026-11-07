@@ -1,0 +1,56 @@
+// ==========================================
+// GREENHOUSE - SENSOR ITEMS
+// ==========================================
+
+Number Greenhouse_AirTemperature "Температура повітря [%.1f °C]" {
+    channel="mqtt:topic:greenhouse:environment:air_temp"
+}
+
+Number Greenhouse_AirHumidity "Вологість повітря [%.1f %%]" {
+    channel="mqtt:topic:greenhouse:environment:air_humidity"
+}
+
+Number Greenhouse_SoilTemperature "Температура ґрунту [%.1f °C]" {
+    channel="mqtt:topic:greenhouse:environment:soil_temp"
+}
+
+Number Greenhouse_SoilHumidity "Вологість ґрунту [%.1f %%]" {
+    channel="mqtt:topic:greenhouse:environment:soil_humidity"
+}
+
+Number Greenhouse_Illumination "Освітленість [%.0f lx]" {
+    channel="mqtt:topic:greenhouse:environment:lux"
+}
+
+Number Greenhouse_CO2 "Показник CO2 [%.0f ppm]" {
+    channel="mqtt:topic:greenhouse:environment:co2"
+}
+
+String Greenhouse_Status "Статус симулятора [%s]" {
+    channel="mqtt:topic:greenhouse:environment:status"
+}
+
+
+// ==========================================
+// GREENHOUSE - ACTUATOR ITEMS
+// ==========================================
+
+Switch Greenhouse_Pump "Полив" {
+    channel="mqtt:topic:greenhouse:environment:pump"
+}
+
+Switch Greenhouse_Fan "Вентиляція" {
+    channel="mqtt:topic:greenhouse:environment:fan"
+}
+
+Switch Greenhouse_Light "Освітлення" {
+    channel="mqtt:topic:greenhouse:environment:light"
+}
+
+Switch Greenhouse_Heater "Обігрів" {
+    channel="mqtt:topic:greenhouse:environment:heater"
+}
+
+Number Greenhouse_Window "Відкриття вікна [%.0f %%]" {
+    channel="mqtt:topic:greenhouse:environment:window"
+}

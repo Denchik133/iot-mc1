@@ -17,3 +17,14 @@ topic read iiot/workshop/machine01/signal_tower/set
 
 user emergency_stop
 topic read iiot/workshop/machine01/emergency_stop/set
+
+# Smart Greenhouse
+user greenhouse_simulator
+topic write greenhouse/sensors/#
+topic write greenhouse/system/#
+topic read greenhouse/actuators/#
+
+user greenhouse_openhab
+topic read greenhouse/sensors/#
+topic read greenhouse/system/#
+topic write greenhouse/actuators/#

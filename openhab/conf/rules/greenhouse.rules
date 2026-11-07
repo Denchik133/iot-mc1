@@ -1,0 +1,105 @@
+// ==========================================
+// SMART GREENHOUSE - AUTOMATION RULES
+// ==========================================
+
+
+// ==========================================
+// 1. AUTOMATIC IRRIGATION
+// ==========================================
+
+rule "Greenhouse - Automatic Irrigation ON"
+when
+    Item Greenhouse_SoilHumidity changed
+then
+    if (Greenhouse_SoilHumidity.state instanceof Number) {
+        val humidity = (Greenhouse_SoilHumidity.state as Number).doubleValue
+
+        if (humidity < 35 && Greenhouse_Pump.state != ON) {
+            Greenhouse_Pump.sendCommand(ON)
+            logInfo("Greenhouse", "Soil humidity below 35%. Irrigation ON.")
+        }
+    }
+end
+
+
+rule "Greenhouse - Automatic Irrigation OFF"
+when
+    Item Greenhouse_SoilHumidity changed
+then
+    if (Greenhouse_SoilHumidity.state instanceof Number) {
+        val humidity = (Greenhouse_SoilHumidity.state as Number).doubleValue
+
+        if (humidity > 60 && Greenhouse_Pump.state != OFF) {
+            Greenhouse_Pump.sendCommand(OFF)
+            logInfo("Greenhouse", "Soil humidity above 60%. Irrigation OFF.")
+        }
+    }
+end
+
+
+// ==========================================
+// 2. AUTOMATIC VENTILATION
+// ==========================================
+
+rule "Greenhouse - Automatic Ventilation ON"
+when
+    Item Greenhouse_AirTemperature changed
+then
+    if (Greenhouse_AirTemperature.state instanceof Number) {
+        val temperature = (Greenhouse_AirTemperature.state as Number).doubleValue
+
+        if (temperature > 30 && Greenhouse_Fan.state != ON) {
+            Greenhouse_Fan.sendCommand(ON)
+            logInfo("Greenhouse", "Air temperature above 30 C. Ventilation ON.")
+        }
+    }
+end
+
+
+rule "Greenhouse - Automatic Ventilation OFF"
+when
+    Item Greenhouse_AirTemperature changed
+then
+    if (Greenhouse_AirTemperature.state instanceof Number) {
+        val temperature = (Greenhouse_AirTemperature.state as Number).doubleValue
+
+        if (temperature < 26 && Greenhouse_Fan.state != OFF) {
+            Greenhouse_Fan.sendCommand(OFF)
+            logInfo("Greenhouse", "Air temperature below 26 C. Ventilation OFF.")
+        }
+    }
+end
+
+
+// ==========================================
+// 3. AUTOMATIC LIGHTING
+// ==========================================
+
+rule "Greenhouse - Automatic Lighting ON"
+when
+    Item Greenhouse_Illumination changed
+then
+    if (Greenhouse_Illumination.state instanceof Number) {
+        val illumination = (Greenhouse_Illumination.state as Number).doubleValue
+
+        if (illumination < 3000 && Greenhouse_Light.state != ON) {
+            Greenhouse_Light.sendCommand(ON)
+            logInfo("Greenhouse", "Illumination below 3000 lx. Lighting ON.")
+        }
+    }
+end
+
+
+rule "Greenhouse - Automatic Lighting OFF"
+when
+    Item Greenhouse_Illumination changed
+then
+    if (Greenhouse_Illumination.state instanceof Number) {
+        val illumination = (Greenhouse_Illumination.state as Number).doubleValue
+
+        if (illumination > 7000 && Greenhouse_Light.state != OFF) {
+            Greenhouse_Light.sendCommand(OFF)
+            logInfo("Greenhouse", "Illumination above 7000 lx. Lighting OFF.")
+        }
+    }
+end

@@ -1,0 +1,71 @@
+Bridge mqtt:broker:greenhouse "Greenhouse MQTT Broker" [
+    host="pr8-mosquitto",
+    port=1883,
+    secure=false,
+    username="greenhouse_app",
+    password="12801460s",
+    clientID="openhab-greenhouse",
+    qos=1,
+    keepAlive=60,
+    reconnectTime=10
+] {
+}
+
+Thing mqtt:topic:greenhouse:environment "Greenhouse Environment" (mqtt:broker:greenhouse) {
+    Channels:
+        Type number : air_temp "Air Temperature" [
+            stateTopic="greenhouse/sensors/air_temp"
+        ]
+
+        Type number : air_humidity "Air Humidity" [
+            stateTopic="greenhouse/sensors/air_humidity"
+        ]
+
+        Type number : soil_temp "Soil Temperature" [
+            stateTopic="greenhouse/sensors/soil_temp"
+        ]
+
+        Type number : soil_humidity "Soil Humidity" [
+            stateTopic="greenhouse/sensors/soil_humidity"
+        ]
+
+        Type number : lux "Illumination" [
+            stateTopic="greenhouse/sensors/lux"
+        ]
+
+        Type number : co2 "Air Quality (CO2)" [
+            stateTopic="greenhouse/sensors/co2"
+        ]
+
+        Type string : status "Simulator Status" [
+            stateTopic="greenhouse/system/status"
+        ]
+
+        Type switch : pump "Irrigation Pump" [
+            commandTopic="greenhouse/actuators/pump",
+            on="ON",
+            off="OFF"
+        ]
+
+        Type switch : fan "Ventilation Fan" [
+            commandTopic="greenhouse/actuators/fan",
+            on="ON",
+            off="OFF"
+        ]
+
+        Type switch : light "Grow Light" [
+            commandTopic="greenhouse/actuators/light",
+            on="ON",
+            off="OFF"
+        ]
+
+        Type switch : heater "Heater" [
+            commandTopic="greenhouse/actuators/heater",
+            on="ON",
+            off="OFF"
+        ]
+
+        Type number : window "Window Opening" [
+            commandTopic="greenhouse/actuators/window"
+        ]
+}
