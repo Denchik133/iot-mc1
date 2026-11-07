@@ -40,3 +40,7 @@ mosquitto/data/
 
 # Local openHAB configuration with credentials
 openhab/conf/things/mqtt.things
+
+# Mosquitto backup files
+mosquitto/config/*.before_greenhouse
+mosquitto/config/*.before_container_tool
