@@ -44,3 +44,4 @@ openhab/conf/things/mqtt.things
 # Mosquitto backup files
 mosquitto/config/*.before_greenhouse
 mosquitto/config/*.before_container_tool
+openhab/conf/services/influxdb.cfg
